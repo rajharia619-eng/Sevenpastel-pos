@@ -5,11 +5,15 @@ import uuid, os
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET", "dev_secret_change_this")
-db_path = os.path.join(os.path.dirname(__file__), "pos.db")
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Use persistent storage directory on Render
+db_path = "/data/pos.db" if os.environ.get("RENDER") else "pos.db"
+
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 db = SQLAlchemy(app)
-# Create database tables at startup (Flask 3 compatible)
+
 with app.app_context():
     db.create_all()
 
