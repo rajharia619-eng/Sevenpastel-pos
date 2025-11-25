@@ -10,6 +10,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# Create database tables at startup (Flask 3 compatible)
+with app.app_context():
+    db.create_all()
+
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
@@ -44,10 +48,6 @@ class Audit(db.Model):
     ticket_id = db.Column(db.Integer)
     message = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime(timezone=True), server_default=func.now())
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 @app.route('/')
 def index():
