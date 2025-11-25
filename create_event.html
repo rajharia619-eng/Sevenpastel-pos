@@ -1,0 +1,12 @@
+{% extends "layout.html" %}{% block content %}
+  <h3>Create Event</h3>
+  <form method="post">
+    <label>Title</label>
+    <input name="title" placeholder="SEVENPASTEL Yacht Sundowner" required />
+    <label>Date & time (ISO)</label>
+    <input name="date" placeholder="2025-12-20T18:00:00" required />
+    <label>Capacity</label>
+    <input name="capacity" type="number" placeholder="120" />
+    <button class="btn" type="submit">Create</button>
+  </form>
+{% endblock %}

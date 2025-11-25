@@ -1,0 +1,25 @@
+{% extends "layout.html" %}{% block content %}
+  <h3>{{ event.title }}</h3>
+  <div><strong>Date:</strong> {{ event.date }}</div>
+  <div style="margin-top:8px;"><a href="{{ url_for('sell_ticket', event_id=event.id) }}" class="btn">Sell ticket</a></div>
+  <h4 style="margin-top:16px">Tickets</h4>
+  {% if tickets %}
+    <table>
+      <tr><th>ID</th><th>Buyer</th><th>Tier</th><th>Price</th><th>Redeemable</th><th>QR Token</th><th>Actions</th></tr>
+      {% for t in tickets %}
+        <tr>
+          <td>{{ t.id }}</td>
+          <td>{{ t.buyer_name }}</td>
+          <td>{{ t.tier }}</td>
+          <td>{{ t.price|rupee }}</td>
+          <td>{{ t.redeemable_balance|rupee }}</td>
+          <td style="font-family:monospace">{{ t.qr_token }}</td>
+          <td><a href="{{ url_for('ticket_by_qr', token=t.qr_token) }}">Open</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <div>No tickets sold yet</div>
+  {% endif %}
+  <div style="margin-top:12px"><strong>Total sales:</strong> {{ total_sales|rupee }} &nbsp; | &nbsp; <strong>Total redeemed:</strong> {{ total_redeemed|rupee }}</div>
+{% endblock %}

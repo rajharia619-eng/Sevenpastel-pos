@@ -1,0 +1,19 @@
+{% extends "layout.html" %}{% block content %}
+  <h3>Events</h3>
+  <p><a href="{{ url_for('create_event') }}">+ Create new event</a></p>
+  {% if events %}
+    <table>
+      <tr><th>Title</th><th>Date</th><th>Capacity</th><th>Actions</th></tr>
+      {% for e in events %}
+        <tr>
+          <td>{{ e.title }}</td>
+          <td>{{ e.date }}</td>
+          <td>{{ e.capacity }}</td>
+          <td><a href="{{ url_for('event_detail', event_id=e.id) }}">View</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <div>No events yet</div>
+  {% endif %}
+{% endblock %}

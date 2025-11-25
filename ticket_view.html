@@ -1,0 +1,15 @@
+{% extends "layout.html" %}{% block content %}
+  <h3>Ticket #{{ ticket.id }}</h3>
+  <div><strong>Buyer:</strong> {{ ticket.buyer_name }}</div>
+  <div><strong>Tier:</strong> {{ ticket.tier }}</div>
+  <div><strong>Price:</strong> {{ ticket.price|rupee }}</div>
+  <div><strong>Redeemable balance:</strong> {{ ticket.redeemable_balance|rupee }}</div>
+  <div style="margin-top:8px"><strong>QR token:</strong> <code>{{ ticket.qr_token }}</code></div>
+
+  <h4 style="margin-top:12px">Redeem</h4>
+  <form method="post" action="{{ url_for('redeem', ticket_id=ticket.id) }}">
+    <label>Amount to redeem (INR)</label>
+    <input name="amount" type="number" placeholder="4500" required />
+    <button class="btn" type="submit">Redeem</button>
+  </form>
+{% endblock %}

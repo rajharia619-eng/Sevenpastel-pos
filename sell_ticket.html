@@ -1,0 +1,14 @@
+{% extends "layout.html" %}{% block content %}
+  <h3>Sell ticket - {{ event.title }}</h3>
+  <form method="post">
+    <label>Buyer name</label>
+    <input name="buyer_name" placeholder="Buyer name (optional)" />
+    <label>Tier name</label>
+    <input name="tier" placeholder="Couple Full Cover" />
+    <label>Price (INR)</label>
+    <input name="price" type="number" placeholder="9500" />
+    <label>Redeemable amount (INR)</label>
+    <input name="redeemable" type="number" placeholder="4500" />
+    <button class="btn" type="submit">Sell</button>
+  </form>
+{% endblock %}
