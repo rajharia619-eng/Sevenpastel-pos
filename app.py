@@ -6,17 +6,19 @@ import uuid, os
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET", "dev_secret_change_this")
 
-db_path = "/tmp/pos.db"
+# Render-compatible SQLite storage
+db_folder = "/var/data"
+os.makedirs(db_folder, exist_ok=True)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db_path = os.path.join(db_folder, "pos.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-# Create DB tables at startup
+# Create DB on startup
 with app.app_context():
-    if not os.path.exists(db_path):
-        db.create_all()
+    db.create_all()
 
 
 class Event(db.Model):
